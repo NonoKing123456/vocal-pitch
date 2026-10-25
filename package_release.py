@@ -41,17 +41,26 @@ python_license=Path(sys.base_prefix)/'LICENSE.txt'
 if python_license.exists():
     (LICENSES/'python').mkdir(exist_ok=True)
     shutil.copy2(python_license,LICENSES/'python'/'LICENSE.txt')
-for name,url in {
-    'LGPL-3.0.txt':'https://www.gnu.org/licenses/lgpl-3.0.txt',
-    'GPL-3.0.txt':'https://www.gnu.org/licenses/gpl-3.0.txt',
-    'LGPL-2.1.txt':'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt',
-    'GPL-2.0.txt':'https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt',
-    'PortAudio-MIT.txt':'https://raw.githubusercontent.com/PortAudio/portaudio/master/LICENSE.txt',
+for name,urls in {
+    'LGPL-3.0.txt':('https://raw.githubusercontent.com/spdx/license-list-data/main/text/LGPL-3.0-only.txt','https://www.gnu.org/licenses/lgpl-3.0.txt'),
+    'GPL-3.0.txt':('https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-3.0-only.txt','https://www.gnu.org/licenses/gpl-3.0.txt'),
+    'LGPL-2.1.txt':('https://raw.githubusercontent.com/spdx/license-list-data/main/text/LGPL-2.1-only.txt','https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt'),
+    'GPL-2.0.txt':('https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-2.0-only.txt','https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt'),
+    'PortAudio-MIT.txt':('https://raw.githubusercontent.com/PortAudio/portaudio/master/LICENSE.txt',),
 }.items():
     target=LICENSES/name
     if not target.exists():
-        with urllib.request.urlopen(url,timeout=60) as response:
-            target.write_bytes(response.read())
+        for url in urls:
+            try:
+                with urllib.request.urlopen(url,timeout=20) as response:
+                    content=response.read()
+                if len(content)>100:
+                    target.write_bytes(content)
+                    break
+            except OSError:
+                continue
+        else:
+            raise RuntimeError(f'Could not download license: {name}')
     if target.stat().st_size<100:
         raise RuntimeError(f'License download failed: {name}')
 (LICENSES/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
