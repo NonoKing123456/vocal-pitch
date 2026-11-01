@@ -90,3 +90,10 @@ python -m venv .venv
 本工具使用 **PySide6／Qt（LGPLv3）**，以及 NumPy、SciPy、sounddevice、SoundFile 等组件。许可、动态库替换方法和对应源码入口见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，分发包中附有相应许可文本。
 
 项目源码尚未单独指定开源许可证；第三方组件保留各自的许可和权利。
+
+
+## 项目维护与支持
+
+[开发与验证](docs/DEVELOPMENT.md) · [常见问题](docs/FAQ.md) · [贡献说明](CONTRIBUTING.md) · [安全报告](SECURITY.md)
+
+问题和功能建议请使用 [Issues](https://github.com/NonoKing123456/vocal-pitch/issues) 中的模板，注明版本、系统和复现步骤。不要用本机个人数据作为公开复现附件。

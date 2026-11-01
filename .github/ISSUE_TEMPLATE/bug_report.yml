@@ -1,0 +1,39 @@
+name: 问题反馈
+description: 报告运行、使用或构建问题
+title: "[问题] "
+body:
+  - type: markdown
+    attributes:
+      value: 请先查看 docs/FAQ.md，优先使用合成素材。不要附个人录音、麦克风原始数据、个人路径和设置日志。
+  - type: input
+    id: version
+    attributes:
+      label: 版本或源码提交
+      description: 说明使用现有下载包、网页还是源码；未知请注明。
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 运行环境
+      description: 操作系统、浏览器或开发工具版本，以及相关设备。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 从哪个入口开始，依次如何操作，是否每次发生？
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: 预期结果与实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏报错或最小样本
+      description: 可附合成样本和脱敏截图，不要公开私人数据。
